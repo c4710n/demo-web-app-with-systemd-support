@@ -10,7 +10,8 @@ defmodule Demo.Application do
   def start(_type, _args) do
     children = [
       {Plug.Cowboy, plug: Demo.Router, scheme: :http, options: negotiate_cowboy_opts()},
-      {Plug.Cowboy.Drainer, refs: :all}
+      {Plug.Cowboy.Drainer, refs: :all},
+      :systemd.ready()
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
