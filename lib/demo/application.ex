@@ -26,7 +26,8 @@ defmodule Demo.Application do
   end
 
   defp to_cowboy_opts([] = _systemd_socket_fds) do
-    port = System.get_env("PORT", "8000") |> String.to_integer()
+    env_port = System.get_env("PORT") || System.get_env("SHIP_WEB_SERVICE_PORT") || "8000"
+    port = String.to_integer(env_port)
     Logger.info("No systemd socket file descriptors found, fallback to listening on #{port}")
 
     [net: :inet, ip: {127, 0, 0, 1}, port: port]
