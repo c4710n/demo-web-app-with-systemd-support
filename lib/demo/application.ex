@@ -10,8 +10,10 @@ defmodule Demo.Application do
   def start(_type, _args) do
     children = [
       {Plug.Cowboy, plug: Demo.Router, scheme: :http, options: negotiate_cowboy_opts()},
+      :systemd.ready(),
+      :systemd.set_status(down: [status: "drained"]),
       {Plug.Cowboy.Drainer, refs: :all},
-      :systemd.ready()
+      :systemd.set_status(down: [status: "draining"])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
