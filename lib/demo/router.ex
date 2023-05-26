@@ -5,7 +5,7 @@ defmodule Demo.Router do
   plug :dispatch
 
   get "/" do
-    send_resp(conn, 200, "hello world.")
+    send_resp(conn, 200, "hello from #{inspect(Node.self())}.")
   end
 
   match _ do
